@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  contact:
+    name: Test
+  description: Test
+  title: Test
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Localhost
+paths:
+  /testNOK/{testId}:
+    get:
+      description: showcase ref
+      parameters:
+        - $ref: '#/components/parameters/testId'
+      operationId: testNOK
+      responses:
+        "200":
+          description: OK
+  /testNOK2/{test2Id}:
+    get:
+      description: showcase direct
+      parameters:
+        - name: test2Id
+          in: path
+          schema:
+            type: integer
+          required: true
+      operationId: testNOK2
+      responses:
+        "200":
+          description: OK
+  /testOK/{test3Id}:
+    description: showcase good
+    get:
+      parameters:
+        - name: test2Id
+          in: path
+          schema:
+            type: string
+          required: true
+      operationId: testNOK3
+      responses:
+        "200":
+          description: OK
+components:
+  parameters:
+    testId:
+      name: testId
+      in: path
+      schema:
+        type: integer
+      required: true
+

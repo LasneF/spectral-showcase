@@ -1,0 +1,31 @@
+extends: ["spectral:oas"]
+
+rules : 
+    operation-operationId : false
+    operation-description : false
+    operation-tags: false
+    operation-success-response : false
+    oas3-unused-component : false
+
+    "owasp:api1:2019-no-numeric-ids": {
+      description:
+        "OWASP API1:2019 - Use random IDs that cannot be guessed. UUIDs are preferred.",
+      severity: error,
+      given:
+        '$.paths..parameters[*][?(@property === "name" && (@ === "id" || @.match(/(_id|Id|-id)$/)))]^.schema',
+      then: {
+        function: schema,
+        functionOptions: {
+          schema: {
+            type: "object",
+            not: {
+              properties: {
+                type: {
+                  const: "integer",
+                },
+              },
+            }
+          },
+        },
+      },
+    }
